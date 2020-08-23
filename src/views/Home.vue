@@ -13,10 +13,10 @@
           <div class="col-sm-12 col-md-10 col-lg-10">
             <div class="container">
               <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-4 mt-3 mb-3" v-for="pollingUnit in pollingUnitsForConstituency" :key="pollingUnit.id">
+                <div class="col-sm-12 col-md-6 col-lg-4 mt-3 mb-3" v-for="unit in units" :key="unit.id">
                   <div class="card">
                     <div class="card-body">
-                      <h5>{{pollingUnit}}</h5>
+                      <h5>{{unit.unit}}</h5>
                     </div>
                   </div>
                 </div>
@@ -32,6 +32,7 @@
 <script>
 // @ is an alias to /src
 import Header from '@/views/Header'
+import { db } from './firebase'
 
 export default {
   name: 'Home',
@@ -40,74 +41,33 @@ export default {
   },
   data() {
     return {
-      pollingUnitsForConstituency: [],
-      constituencies: [
-        {
-          id: 1,
-          name: 'Calabar South',
-          pollingUnits: [
-            'Polling One', 'Polling Two', 'Polling Three', 'Polling Four', 'Polling Five', 'Polling Six', 'Polling Seven'
-          ]
-        },
-        {
-          id: 2,
-          name: 'Calabar Mucipality',
-          pollingUnits: [
-            'Polling One', 'Polling Two', 'Polling Three', 'Polling Four', 'Polling Five'
-          ]
-        },
-        {
-          id: 3,
-          name: 'Akamkpa/Biase',
-          pollingUnits: [
-            'Polling One', 'Polling Two', 'Polling Three', 'Polling Four', 'Polling Five', 'Polling Six', 'Polling Seven', 'Polling Eight', 'Polling Nine', 'Polling Ten'
-          ]
-        },
-        {
-          id: 4,
-          name: 'Abi/Yakurr',
-          pollingUnits: [
-            'Polling One', 'Polling Two', 'Polling Three', 'Polling Four', 'Polling Five', 'Polling Six', 'Polling Seven', 'Polling Eight'
-          ]
-        },
-        {
-          id: 5,
-          name: 'Obubra/Itun',
-          pollingUnits: [
-            'Polling One', 'Polling Two', 'Polling Three', 'Polling Four', 'Polling Five', 'Polling Six', 'Polling Seven', 'Polling Eight', 'Polling Nine'
-          ]
-        },
-        {
-          id: 6,
-          name: 'Ikom/Boki',
-          pollingUnits: [
-            'Polling One', 'Polling Two', 'Polling Three', 'Polling Four', 'Polling Five', 'Polling Six', 'Polling Seven', 'Polling Eight', 'Polling Nine', 'Polling Ten'
-          ]
-        },
-        {
-          id: 7,
-          name: 'Obudu/Obanliku/Bekwara',
-          pollingUnits: [
-            'Polling One', 'Polling Two', 'Polling Three', 'Polling Four', 'Polling Five', 'Polling Six', 'Polling Seven', 'Polling Eight', 'Polling Nine', 'Polling Ten'
-          ]
-        },
-        {
-          id: 8,
-          name: 'Ogoja Yala',
-          pollingUnits: [
-            'Polling One', 'Polling Two', 'Polling Three', 'Polling Four', 'Polling Five', 'Polling Six', 'Polling Seven', 'Polling Eight', 'Polling Nine', 'Polling Ten'
-          ]
-        }
-      ]
+      units: [],
+      constituencies: []
     }
   },
   methods: {
     async addToPollingUnit(constituency) {
-      this.pollingUnitsForConstituency = await constituency.pollingUnits
+      this.units = await constituency.pollingUnits
       
-      console.log(this.pollingUnitsForConstituency)
+      console.log(this.units)
+    },
+    async readPollingUnits() {
+      await db.collection('areas').get()
+        .then((area) => {
+          area.forEach(doc => {
+            this.constituencies.push(doc.data())
+            console.log(this.constituencies)
+          })
+          
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
-  }
+  },
+  created () {
+    this.readPollingUnits();
+  },
 }
 </script>
 
