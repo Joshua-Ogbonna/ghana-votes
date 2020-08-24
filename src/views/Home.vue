@@ -80,4 +80,5 @@ export default {
   ul li:hover {
     cursor: pointer;
   }
+  
 </style>
