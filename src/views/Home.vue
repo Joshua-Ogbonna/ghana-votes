@@ -16,12 +16,19 @@
               <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-4 mt-3 mb-3" v-for="unit in units" :key="unit.id">
                   <div class="card shadow p-3 mb-5 bg-white rounded">
-                    <div class="card-body" @click="updateVotes(unit)">
+                    <div class="card-body">
                       <h5 class="polling-unit">{{unit.unit}}</h5>
                       <div class="container">
                         <div class="row">
                           <p> NPP: {{unit.NPP}} </p>
                           <p class="pl-1"> NDC: {{unit.NDC}} </p>
+                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
+                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
+                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
+                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
+                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
+                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
+                          
                         </div>
                       </div>
 
@@ -100,9 +107,11 @@ export default {
         })
     },
     async updateVotes(unit) {
-      let pollingUnit = await db.collection('areas').doc(unit)
-      
+      await db.collection('areas').doc(unit)
+        .update({
 
+        })
+        .catch((error) => console.log(error))
     }
   },
   created () {
