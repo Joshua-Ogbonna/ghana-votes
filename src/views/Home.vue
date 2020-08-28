@@ -15,20 +15,29 @@
             <div class="container">
               <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-4 mt-3 mb-3" v-for="unit in units" :key="unit.id">
-                  <div class="card shadow p-3 mb-5 bg-white rounded">
-                    <div class="card-body">
+                  <div class="card shadow mb-5 bg-white rounded">
+                    <div class="card-header">
                       <h5 class="polling-unit">{{unit.unit}}</h5>
+                    </div>
+                    <div class="card-body">
+                      
                       <div class="container">
-                        <div class="row">
-                          <p> NPP: {{unit.NPP}} </p>
-                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
-                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
-                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
-                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
-                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
-                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
-                          <p class="pl-1"> NDC: {{unit.NDC}} </p>
-                          
+                        <h5 class="" id="title">Presidential</h5>
+                        <div class="row" v-for="presidential in unit.presidential" :key="presidential">
+                            <p> NDC: {{presidential.NDC}} </p>
+                            <p class="ml-1">NPP: {{presidential.NPP}} </p>
+                            <p class="ml-1">Others: {{presidential.Others}} </p>
+                            <p class="ml-1">Rejected: {{presidential.Rejected}}</p>
+                            <p class="ml-1">Total: {{presidential.Total}} </p>
+                        </div>
+                        <hr>
+                        <h5 class="" id="title">Parliamentary</h5>
+                        <div class="row" v-for="parliamentary in unit.parliamentary" :key="parliamentary">
+                            <p> NDC: {{parliamentary.NDC}} </p>
+                            <p class="ml-1">NPP: {{parliamentary.NPP}} </p>
+                            <p class="ml-1">Others: {{parliamentary.Others}} </p>
+                            <p class="ml-1">Rejected: {{parliamentary.Rejected}}</p>
+                            <p class="ml-1">Total: {{parliamentary.Total}} </p>
                         </div>
                       </div>
 
@@ -48,16 +57,46 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="updateVote">Modal title</h5>
+            <h5 class="modal-title" id="updateVote">Update Votes</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
+            <!-- Presidential Form -->
             <form>
+              <h5>Update Presidential Votes</h5>
               <div class="form-group">
                 <!-- <label for="CPP Votes">CPP Votes</label> -->
-                <input type="number" class="form-control" placeholder="CPP Votes">
+                <input type="number" class="form-control" placeholder="NDC Votes">
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="NPP Votes">
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="Other Votes">
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="Rejected Votes">
+              </div>
+            </form>
+            
+            <!-- Parliamentary Form -->
+
+            <form>
+              <h5>Update Parliamentary Votes</h5>
+              <div class="form-group">
+                <!-- <label for="CPP Votes">CPP Votes</label> -->
+                <input type="number" class="form-control" placeholder="NDC Votes">
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="NPP Votes">
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="Other Votes">
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control" placeholder="Rejected Votes">
               </div>
             </form>
           </div>
@@ -88,13 +127,13 @@ export default {
     }
   },
   methods: {
-    async addToPollingUnit(constituency) {
-      this.units = await constituency.pollingUnits
+    addToPollingUnit(constituency) {
+      this.units = constituency.pollingUnits
       
       // console.log(this.units)
     },
-    async readPollingUnits() {
-      await db.collection('areas').get()
+    readPollingUnits() {
+      db.collection('areas').get()
         .then((area) => {
           area.forEach(doc => {
             this.constituencies.push(doc.data())
@@ -106,16 +145,20 @@ export default {
           console.log(error)
         })
     },
-    async updateVotes(unit) {
-      await db.collection('areas').doc(unit)
-        .update({
-
-        })
-        .catch((error) => console.log(error))
+    updateVotes() {
+      let pollingUnit = db.collection('areas').doc('Awudome')
+      console.log(pollingUnit)  
     }
   },
   created () {
     this.readPollingUnits();
+    let areas = db.collection('areas').get()
+    areas.then((area) => {
+      area.forEach((doc) => {
+        let myDoc = doc.data()
+        console.log(myDoc)
+      })
+    })
   },
 }
 </script>
@@ -133,14 +176,18 @@ export default {
     border: none;
   }
   .polling-unit {
-    font-size: 1em;
+    font-size: 0.87em;
     font-family: 'Nunito', sans-serif;
   }
   p {
-    font-family: 'Lato', sans-serif;
     color: rgb(114, 111, 111);
+    margin-left: 1em;
   }
   #lists {
     font-family: 'Alata', sans-serif;
+  }
+  #title {
+    font-size: 1em;
+    margin-top: 0em;
   }
 </style>
