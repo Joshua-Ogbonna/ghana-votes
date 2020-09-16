@@ -15,7 +15,7 @@
                     <div class="left-sidebar">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <button class="nav-link active btn">General Information <i class="fas fa-angle-double-right"></i></button>
+                                <router-link class="nav-link active btn" id="button" to="/">General Information <i class="fas fa-angle-double-right"></i></router-link>
                             </li>
                             <li class="nav-item">
                                 <router-link class="nav-link" id="link" to="/update/avenor"> Avenor</router-link>
@@ -97,7 +97,7 @@
         color:#1241db;
         font-size: 2em;
     }
-    button {
+    #button {
         background-color: #1241db;
         color: white;
         padding: 15px 13px;

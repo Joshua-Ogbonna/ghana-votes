@@ -33,8 +33,9 @@
                                 <a class="nav-link" id="link" href="#"> <i class="far fa-address-book"></i> Contestants</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="link" href="#"> <i class="fas fa-angle-double-right"></i> General</a>
+                                <router-link class="nav-link" id="link" to="/update"> <i class="fas fa-angle-double-right"></i> Update</router-link>
                             </li>
+                            
                         </ul>
                     </div>
                 </div>
