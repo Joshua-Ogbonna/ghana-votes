@@ -29,7 +29,7 @@
 <script>
 /* eslint-disable */
 import * as firebase from 'firebase/app'
-import {auth} from './firebase'
+import {auth} from '../firebase'
   export default {
     data() {
       return {
