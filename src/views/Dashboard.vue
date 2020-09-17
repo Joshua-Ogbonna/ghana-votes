@@ -41,7 +41,7 @@
                 </div>
                 
                 <div class="col-md-10" id="details">
-                    <div class="container">
+                    <div class="container mb-4">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="card">
@@ -105,15 +105,36 @@
                             </div>
                         </div>
                     </div>
+
+                    <!--Chart Section -->
+
+                    <div class="container mt-5">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <chart-bar></chart-bar>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <charts></charts>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import charts from '@/components/charts'
+import bar from '@/components/bar'
+
     export default {
-        
+        components: {
+            charts,
+            'chart-bar': bar
+        },
     }
 </script>
 
@@ -133,7 +154,6 @@
         height: (100vh - 70px)
     }
     #details {
-        height: 100vh;
         margin-left: 15.5em;
         padding-top: 2em;
         margin-top: 5em;

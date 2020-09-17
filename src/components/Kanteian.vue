@@ -36,7 +36,7 @@
                                     Rejected: {{parliamentary.Rejected}}</p>
                                 </div>
                             </div>
-                            <button class="btn" data-toggle="modal" data-target="#exampleModal">Update Votes</button>
+                            <button class="btn" data-toggle="modal" data-target="#exampleModal" @click="updateVotes()">Update Votes</button>
                         </div>
                     </div>
 
@@ -139,8 +139,25 @@ import {db} from '../firebase.js'
 
         // Vue Methods
         methods: {
-            addToPollingUnits() {
-                
+            async updateVotes() {
+                for (let constituency in this.constituencyData) {
+                    /* eslint-disable */
+                    for (let units in this.constituencyData[constituency].pollingUnits) {
+                        let kanteian = await db.collection('areas').where('name', '==', 'Kanteian').get()
+            
+                        if (!kanteian.empty) {
+                            const snapshot = kanteian.docs[0]
+                            const data = snapshot.data()
+                            
+                            for (let element in data.pollingUnits) {
+                                if (data.pollingUnits[element].unit == this.constituencyData[constituency].pollingUnits[units]) {
+                                    
+                                }
+                            }
+                        }
+                                                
+                    }
+                }
             }
         },
 

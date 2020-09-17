@@ -4,6 +4,9 @@ import router from './router'
 import store from './store'
 import VueFirestore from 'vue-firestore'
 
+import "chart.js"
+import "hchs-vue-charts"
+
 
 Vue.config.productionTip = false
 
@@ -11,6 +14,7 @@ Vue.config.productionTip = false
 import * as firebase from 'firebase/app'
 
 Vue.use(VueFirestore)
+Vue.use(window.VueCharts)
 
 let app
 
